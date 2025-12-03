@@ -1,0 +1,187 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Category {
+  id: Int!
+  name: String!
+  slug: String!
+  icon: String
+  status: STATUS!
+  posts: [Post!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+enum STATUS {
+  ACTIVE
+  INACTIVE
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Comment {
+  id: Int!
+  content: String
+  post: Post
+  user: User
+  status: STATUS!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Tag {
+  id: Int!
+  name: String!
+  slug: String!
+  status: STATUS!
+  posts: [Post!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Post {
+  id: Int!
+  name: String!
+  slug: String!
+  summary: String!
+  description: String
+  image: String
+  user: User
+  category: Category
+  tags: [Tag!]
+  comments: [Comment!]
+  status: STATUS!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type User {
+  id: Int!
+  name: String!
+  email: String!
+  avatar: String
+  role: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  posts: [Post!]
+  comments: [Comment!]
+}
+
+type ResponseDto {
+  status: Boolean!
+  message: String!
+}
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  categories: [Category!]!
+  category(id: Int!): Category!
+  tags: [Tag!]!
+  tag(id: Int!): Tag!
+  posts: [Post!]!
+  post(id: Int!): Post!
+  comments: [Comment!]!
+  comment(id: Int!): Comment!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): Boolean!
+  login(email: String!, password: String!): String!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(id: Int!, updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: Int!): ResponseDto!
+  createTag(createTagInput: CreateTagInput!): Tag!
+  updateTag(id: Int!, updateTagInput: UpdateTagInput!): Tag!
+  removeTag(id: Int!): Boolean!
+  createPost(createPostInput: CreatePostInput!): Post!
+  updatePost(updatePostInput: UpdatePostInput!): Post!
+  removePost(id: Int!): Post!
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
+  removeComment(id: Int!): Comment!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  avatar: String
+  role: String!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  password: String
+  avatar: String
+  role: String
+}
+
+input CreateCategoryInput {
+  name: String!
+  status: STATUS!
+  icon: String
+}
+
+input UpdateCategoryInput {
+  name: String
+  status: STATUS
+  icon: String
+}
+
+input CreateTagInput {
+  name: String!
+  status: STATUS!
+}
+
+input UpdateTagInput {
+  name: String
+  status: STATUS
+}
+
+input CreatePostInput {
+  """Post name"""
+  name: String!
+  summary: String!
+  description: String
+  image: String
+  authorId: Int
+  categoryId: Int!
+  tagIds: [Int!]
+  status: STATUS!
+}
+
+input UpdatePostInput {
+  """Post name"""
+  name: String
+  summary: String
+  description: String
+  image: String
+  authorId: Int
+  categoryId: Int
+  tagIds: [Int!]
+  status: STATUS
+  id: Int!
+}
+
+input CreateCommentInput {
+  content: String
+  postId: Int!
+  userId: Int!
+  status: STATUS
+}
+
+input UpdateCommentInput {
+  content: String
+  postId: Int
+  userId: Int
+  status: STATUS
+  id: Int!
+}
