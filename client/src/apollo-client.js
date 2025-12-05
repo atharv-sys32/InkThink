@@ -4,8 +4,11 @@ import { setContext } from "@apollo/client/link/context";
 import { toast } from "react-toastify";
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
+// Use environment variable for API URL, fallback to relative path for production
+const API_URL = import.meta.env.VITE_API_URL || '/graphql';
+
 const uploadLink = createUploadLink({
-  uri: "http://localhost:5000/graphql",
+  uri: API_URL,
   headers: {
     "Apollo-Require-Preflight": "true",
   },

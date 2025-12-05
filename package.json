@@ -1,0 +1,21 @@
+{
+  "name": "inkthink",
+  "version": "1.0.0",
+  "description": "InkThink - Blog Management Platform",
+  "scripts": {
+    "install:all": "cd client && npm install && cd ../server && npm install",
+    "build": "cd client && npm run build && cd ../server && npm run build && npm run copy:frontend",
+    "copy:frontend": "cp -r client/dist server/public",
+    "start": "cd server && npm run start:prod",
+    "dev:client": "cd client && npm start",
+    "dev:server": "cd server && npm run start:dev"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/nestjs-blog-management.git"
+  },
+  "license": "MIT"
+}

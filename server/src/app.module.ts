@@ -18,9 +18,15 @@ import { join } from 'path';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    // Serve uploaded files
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../uploads'),
       serveRoot: '/uploads'
+    }),
+    // Serve React frontend build
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../public'),
+      exclude: ['/graphql*', '/uploads*'],
     }),
     DatabaseModule,
     GraphqlModule,

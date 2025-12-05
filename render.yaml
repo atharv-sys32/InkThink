@@ -1,0 +1,29 @@
+# Render Blueprint for InkThink
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: inkthink
+    runtime: node
+    plan: free
+    buildCommand: |
+      cd client && npm install --legacy-peer-deps && npm run build &&
+      cd ../server && npm install --include=dev && npm run build &&
+      mkdir -p public && cp -r ../client/dist/* public/
+    startCommand: cd server && npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_HOST
+        sync: false
+      - key: DATABASE_PORT
+        sync: false
+      - key: DATABASE_USER
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: DATABASE_NAME
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+    healthCheckPath: /health

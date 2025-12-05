@@ -11,6 +11,7 @@ const logger = new Logger('GraphQL');
       driver: ApolloDriver,
       playground: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      csrfPrevention: false, // Disable CSRF since frontend and backend are same origin
       formatError: (error: any) => {
         logger.error(JSON.stringify(error));
 

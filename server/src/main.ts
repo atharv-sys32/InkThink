@@ -23,6 +23,9 @@ async function bootstrap() {
 
   app.enableCors();
 
-  await app.listen(5000);
+  // Use PORT from environment variable (Render provides this) or default to 5000
+  const port = process.env.PORT || 5000;
+  await app.listen(port);
+  console.log(`Application running on port ${port}`);
 }
 bootstrap();
