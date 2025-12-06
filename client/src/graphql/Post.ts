@@ -79,6 +79,14 @@ export const UPDATE_POST = gql`
       slug
       image
       status
+      category {
+        id
+        name
+      }
+      tags {
+        id
+        name
+      }
     }
   }
 `;

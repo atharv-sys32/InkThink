@@ -45,7 +45,7 @@ A full-stack blog management platform built with **NestJS**, **GraphQL**, **Reac
 ## Project Structure
 
 ```
-nestjs-blog-management/
+inkthink/
 ├── client/                 # React frontend
 │   ├── src/
 │   │   ├── components/     # Reusable components

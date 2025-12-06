@@ -13,9 +13,5 @@
   "engines": {
     "node": "18.x"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yourusername/nestjs-blog-management.git"
-  },
   "license": "MIT"
 }

@@ -183,7 +183,7 @@ const PostModal = ({ addPost, setAddPost, refetch, initialData = null, isEdit = 
             <Select
               multiple
               value={tagIds}
-              onChange={(e) => setTagIds(e.target.value)}
+              onChange={(e) => setTagIds(e.target.value as number[])}
               input={<OutlinedInput label="Tags" />}
               renderValue={(selected) => (
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -216,7 +216,7 @@ const PostModal = ({ addPost, setAddPost, refetch, initialData = null, isEdit = 
         <Button onClick={handleClose} color="primary" variant="outlined">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color="primary" type="submit" variant="contained">
+        <Button onClick={handleSubmit} color="primary" variant="contained" disabled={creating || updating}>
           {creating || updating ? 'saving...' : isEdit ? 'Update Post' : 'Create Post'}
         </Button>
       </DialogActions>

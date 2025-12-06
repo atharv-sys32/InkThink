@@ -6,4 +6,5 @@ export const jwtConstants = {
 export enum STATUS {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
+  DRAFT = 'draft',
 }

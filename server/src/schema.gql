@@ -16,6 +16,7 @@ type Category {
 enum STATUS {
   ACTIVE
   INACTIVE
+  DRAFT
 }
 
 """

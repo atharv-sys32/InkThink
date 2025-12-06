@@ -66,8 +66,6 @@ export class PostService {
         })
       : [];
 
-    console.log(postData);
-
     const post = this.postRepository.create({
       ...postData,
       name,
@@ -94,8 +92,8 @@ export class PostService {
     });
   }
 
-  findOne(id: number) {
-    const post = this.postRepository.findOne({
+  async findOne(id: number) {
+    const post = await this.postRepository.findOne({
       where: {
         id,
       },
@@ -108,34 +106,32 @@ export class PostService {
     return post;
   }
 
-  async update(
-    id: number,
-    updatePostInput: UpdatePostInput,
-  ) {
+  async update(id: number, updatePostInput: UpdatePostInput) {
     const post = await this.findOne(id);
 
-    Object.assign(post, updatePostInput);
+    const { id: inputId, categoryId, tagIds, authorId, ...entityFields } = updatePostInput;
 
-    if (updatePostInput.categoryId) {
+    // Update basic fields (don't touch slug - keep it stable)
+    if (entityFields.name !== undefined) post.name = entityFields.name;
+    if (entityFields.summary !== undefined) post.summary = entityFields.summary;
+    if (entityFields.description !== undefined) post.description = entityFields.description;
+    if (entityFields.image !== undefined) post.image = entityFields.image;
+    if (entityFields.status !== undefined) post.status = entityFields.status;
+
+    // Update category
+    if (categoryId) {
       const category = await this.categoryRepository.findOne({
-        where: {
-          id: updatePostInput.categoryId,
-        },
+        where: { id: categoryId },
       });
-      if (!category) {
-        throw new NotFoundException('Category not found.');
-      }
-      post.category = category;
+      if (category) post.category = category;
     }
 
-    if (updatePostInput.tagIds) {
-      const tags = await this.tagRepository.findBy({
-        id: In(updatePostInput.tagIds),
-      });
-      post.tags = tags;
+    // Update tags
+    if (tagIds) {
+      post.tags = await this.tagRepository.findBy({ id: In(tagIds) });
     }
 
-    return await this.postRepository.save(post);
+    return this.postRepository.save(post);
   }
 
   async remove(id: number) {
